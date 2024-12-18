@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préparez votre Retraite</title>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
+    
+    <script>
+        function toggleServiceDetail(event) {
+            const items = document.querySelectorAll('.service-item');
+            items.forEach(item => {
+                if(item !== event.target.closest('.service-item')) {
+                    item.classList.remove('active');
+                }
+            });
+            const parent = event.target.closest('.service-item');
+            parent.classList.toggle('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                offset: 100,
+                once: false,
+                mirror: true
+            });
+            
+            var rellax = new Rellax('.rellax', {
+                speed: -2,
+                center: true
+            });
+
+            // Animation du compteur avec IntersectionObserver
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.getAttribute('data-target');
+                        const duration = 2000; // 2 secondes
+                        const increment = target / (duration / 16);
+                        let current = 0;
+
+                        const updateCounter = () => {
+                            current += increment;
+                            if(current < target) {
+                                counter.innerText = Math.round(current);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            }, {threshold: 0.5});
+
+            counters.forEach(counter => observer.observe(counter));
+        });
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            width: 100%;
+            max-width: 1200px;
+            color: white;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            margin-top: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            min-width: 200px;
+        }
+
+        .stat-item .counter {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-item p {
+            margin: 10px 0 0;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .service-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .service-features {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .rellax, .texte{
+            text-align: center;
+        }
+
+        .service-features span {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid var(--accent);
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .testimonial h4 {
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .testimonial span {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .stat-item {
+                width: 80%;
+                min-width: unset;
+            }
+
+            .service-features {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Planifiez votre retraite</h1>
+    </header>
+
+    <section class="hero">
+        <div class="rellax" data-rellax-speed="-4">
+            <h2 data-aos="fade-down">Construisez votre avenir financier</h2>
+            <p class="texte" data-aos="fade-up" data-aos-delay="200">Expertise, innovation et accompagnement personnalisé pour une retraite sereine et prospère.</p>
+            <a href="#services" class="btn" data-aos="zoom-in" data-aos-delay="400">Découvrir Nos Services</a>
+        </div>
+        
+        <div class="stats-container" data-aos="fade-up" data-aos-delay="600">
+            <div class="stat-item">
+                <span class="counter" data-target="15000">0</span>
+                <p>Clients satisfaits</p>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="95">0</span><span>%</span>
+                <p>Taux de satisfaction</p>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="25">0</span>
+                <p>Années d'expertise</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <h2 data-aos="fade-up">Nos Services Premium</h2>
+
+        <div class="service-item" onclick="toggleServiceDetail(event)" data-aos="fade-up">
+            <h3>Simulation de revenu à la retraite</h3>
+            <p>Bénéficiez d'une analyse approfondie et personnalisée de vos besoins futurs. Nos algorithmes sophistiqués calculent précisément vos objectifs d'épargne mensuelle pour une retraite confortable et sans compromis.</p>
+            <div class="service-features">
+                <span>IA prédictive</span>
+                <span>Analyse en temps réel</span>
+                <span>Rapports détaillés</span>
+            </div>
+        </div>
+
+        <div class="service-item" onclick="toggleServiceDetail(event)" data-aos="fade-up">
+            <h3>Stratégie patrimoniale optimisée</h3>
+            <p>Notre équipe d'experts analyse méticuleusement votre situation financière pour créer une stratégie d'investissement sur mesure, alliant performance et sécurité pour votre patrimoine.</p>
+            <div class="service-features">
+                <span>Gestion active</span>
+                <span>Diversification optimale</span>
+                <span>Suivi personnalisé</span>
+            </div>
+        </div>
+
+        <div class="service-item" onclick="toggleServiceDetail(event)" data-aos="fade-up">
+            <h3>Suivi personnalisé des objectifs</h3>
+            <p>Accédez à un tableau de bord intelligent qui suit en temps réel la progression de vos investissements. Recevez des recommandations proactives pour optimiser continuellement votre stratégie.</p>
+            <div class="service-features">
+                <span>Dashboard interactif</span>
+                <span>Alertes intelligentes</span>
+                <span>Reporting mensuel</span>
+            </div>
+        </div>
+
+        <div class="service-item" onclick="toggleServiceDetail(event)" data-aos="fade-up">
+            <h3>Expertise financière dédiée</h3>
+            <p>Bénéficiez d'un conseiller personnel hautement qualifié qui vous accompagne dans chaque décision importante, avec des rendez-vous réguliers pour ajuster votre stratégie selon vos objectifs.</p>
+            <div class="service-features">
+                <span>Conseiller dédié</span>
+                <span>Support prioritaire</span>
+                <span>Révisions trimestrielles</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 data-aos="fade-up">L'Excellence à votre service</h2>
+        <div class="details" data-aos="fade-up">
+            <p>Notre approche exclusive combine expertise financière et technologies de pointe pour vous offrir un service d'exception :</p>
+            <ul>
+                <li data-aos="fade-left" data-aos-delay="200">Analyse approfondie de votre situation patrimoniale actuelle et future</li>
+                <li data-aos="fade-left" data-aos-delay="300">Stratégies d'investissement personnalisées et optimisées</li>
+                <li data-aos="fade-left" data-aos-delay="400">Gestion active de votre portefeuille avec surveillance continue</li>
+                <li data-aos="fade-left" data-aos-delay="500">Accompagnement privilégié par des experts certifiés</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section" style="background: var(--light);">
+        <h2 data-aos="fade-up">Innovation & Sécurité</h2>
+        <div class="details" data-aos="fade-up">
+            <p>Notre infrastructure technologique de pointe garantit une gestion optimale de votre patrimoine :</p>
+            <ul>
+                <li data-aos="fade-right" data-aos-delay="200">Cryptage de niveau bancaire pour la protection de vos données</li>
+                <li data-aos="fade-right" data-aos-delay="300">Intelligence artificielle pour l'optimisation des stratégies</li>
+                <li data-aos="fade-right" data-aos-delay="400">Plateforme intuitive de suivi en temps réel</li>
+                <li data-aos="fade-right" data-aos-delay="500">Technologie blockchain pour une traçabilité absolue</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="testimonials section">
+        <h2 data-aos="fade-up">Témoignages Clients</h2>
+        <div class="testimonials-container">
+            <div class="testimonial" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Client">
+                <p>"Une expertise remarquable qui m'a permis d'atteindre mes objectifs de retraite bien plus tôt que prévu."</p>
+                <h4>Pierre D.</h4>
+                <span>Client depuis 5 ans</span>
+            </div>
+            <div class="testimonial" data-aos="fade-up" data-aos-delay="400">
+                <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Cliente">
+                <p>"Un accompagnement personnalisé exceptionnel et des résultats au-delà de mes espérances."</p>
+                <h4>Marie L.</h4>
+                <span>Cliente depuis 3 ans</span>
+            </div>
+            <div class="testimonial" data-aos="fade-up" data-aos-delay="600">
+                <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Client">
+                <p>"La technologie au service de mon patrimoine. Une visibilité parfaite sur mes investissements."</p>
+                <h4>Jean M.</h4>
+                <span>Client depuis 7 ans</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contactez-nous</h3>
+                <p>Email: contact@planifiez-retraite.fr</p>
+                <p>Tél: 01 23 45 67 89</p>
+            </div>
+            <div class="footer-section">
+                <h3>Nos bureaux</h3>
+                <p>Paris - Lyon - Bordeaux - Marseille</p>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-links">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Facebook</a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2024 Planifiez Votre Retraite | Excellence & Innovation</p>
+    </footer>
+</body>
+</html>
